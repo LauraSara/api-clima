@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clima</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <style>
+    body{
+      background-image: url(preguntas-cielo.gif);
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .container{
+      text-align: center;
+      padding: 50px;
+    }
+    #ciudad{
+      margin-bottom:30px; 
+      width: 400px;     
+      height: 50px;  
+    }
+    h2{
+      color: darkgoldenrod;
+      margin-bottom:10px;
+    }    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form>
+      <input type="text" id="ciudad" class="form-control-sm mt-5" placeholder="Ciudad" required/>
+      <input type="submit" class="btn btn-outline-success" value="✔">
+    </form>
+    <div id="informacion"></div>      
+  </div> <!--fin div container-->
+  <script>
+    $(document).ready(function(){
+      $('form').submit(function(){
+        var link = "https://api.openweathermap.org/data/2.5/weather?q="
+        var apiKey = "&&appid=106a4eac9633ef20f650e290fd537d97&units=metric" 
+        $.get(link+$('#ciudad').val()+apiKey, function(data) {
+          $('#informacion').html("<h2>"+data.name+", "+data.sys.country+"</h2><h5>Temperatura: "+data.main.temp+"°C</h5><h5>Coordenadas: "+data.coord.lon+", "+data.coord.lat+" </h5")
+        }, 'json');
+        return false;
+        });  
+    });
+  </script>
+</body>
+</html>
